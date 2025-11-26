@@ -19,6 +19,35 @@ model User {
   updatedAt     DateTime  @updatedAt
 }
 
+model App {
+  id        String   @id @default(cuid())
+  name      String
+  apiKey    String   @unique
+  files     File[]
+  createdAt DateTime @default(now())
+}
+
+model File {
+  id        String   @id @default(cuid())
+  filename  String
+  key       String
+  mimetype  String
+  size      Int
+  bucket    String
+  
+  userId    String
+  user      User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  appId     String?
+  app       App?     @relation(fields: [appId], references: [id])
+
+  createdAt DateTime @default(now())
+
+  @@index([userId])
+  @@index([bucket])
+  @@index([appId])
+}
+
 model Account {
   id                 String  @id @default(cuid())
   userId             String
@@ -52,16 +81,4 @@ model VerificationToken {
   expires    DateTime
 
   @@unique([identifier, token])
-}
-
-model File {
-  id        String   @id @default(cuid())
-  filename  String
-  key       String
-  mimetype  String
-  size      Int
-  bucket    String
-  userId    String
-  user      User     @relation(fields: [userId], references: [id], onDelete: Cascade)
-  createdAt DateTime @default(now())
 }
