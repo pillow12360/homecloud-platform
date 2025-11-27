@@ -1,6 +1,7 @@
 import Link from "next/link"
 import { auth } from "@/auth"
 import AuthTest from "@/components/auth-test"
+import FileTest from "@/components/file-test"
 
 async function getHealthStatus() {
   try {
@@ -60,6 +61,7 @@ export default async function Home() {
 
           {/* 인증 테스트 카드 */}
           <AuthTest session={session} />
+          <FileTest />
           
           {/* 빠른 링크 카드 */}
           <div className="bg-white rounded-xl shadow-sm border border-gray-200 p-6">
