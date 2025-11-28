@@ -42,6 +42,7 @@ export default function FileTest() {
       if (!presignedRes.ok) throw new Error(presignedData.message || "Presigned URL 발급 실패")
 
       const { url } = presignedData.data
+      console.log("Presigned URL:", url)
 
       // 2. MinIO(S3)로 파일 업로드
       const uploadRes = await fetch(url, {
